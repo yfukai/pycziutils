@@ -1,9 +1,11 @@
 import copy
 import json
+from datetime import datetime, timedelta, timezone
+
 import numpy as np
 import pandas as pd
 import xmltodict
-from datetime import datetime, timedelta, timezone
+
 
 def __wrap_list(x):
     if isinstance(x, list):

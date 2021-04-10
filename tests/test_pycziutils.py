@@ -3,8 +3,8 @@
 
 """Tests for `pycziutils` package."""
 
+import pycziutils
 import pytest
-from pycziutils import pycziutils
 
 
 @pytest.fixture

@@ -23,9 +23,18 @@ __author__ = """Yohsuke T. Fukai"""
 __email__ = "ysk@yfukai.net"
 __version__ = "0.1.0"
 
-from ._readers import get_tiled_reader, get_tiled_omexml_metadata
-from ._parsers import (parse_properties,parse_structured_annotation_dict,parse_binning,\
-                       parse_pixel_size,parse_camera_bits,parse_camera_LUT,parse_camera_roi,\
-                       parse_camera_roi_slice,parse_channels,parse_planes)
+from ._parsers import (
+    parse_binning,
+    parse_camera_bits,
+    parse_camera_LUT,
+    parse_camera_roi,
+    parse_camera_roi_slice,
+    parse_channels,
+    parse_pixel_size,
+    parse_planes,
+    parse_properties,
+    parse_structured_annotation_dict,
+)
+from ._readers import get_tiled_omexml_metadata, get_tiled_reader
 
 __all__ = [name for name in dir() if not name.startswith("_")]

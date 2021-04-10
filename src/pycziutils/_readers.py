@@ -5,6 +5,7 @@ import bioformats
 import javabridge
 from javabridge import jutil
 
+
 def get_tiled_reader(path):
     """
     Read tiled czi image and get ZeissCZIReader without stitching
@@ -139,5 +140,3 @@ def with_javabridge(func):
 
 
 ################ metadata parsing functions ################
-
-
