@@ -1,7 +1,6 @@
 # coding: utf-8
 # This file contains a part of source code in python-bioformats (  ), which is licensed
 
-
 import bioformats
 import javabridge
 from javabridge import jutil
