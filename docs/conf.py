@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # pycziutils documentation build configuration file, created by
 # sphinx-quickstart on Fri Jun  9 13:47:02 2017.
@@ -19,7 +20,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('../src/'))
 
 import pycziutils
 
@@ -46,9 +47,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'pycziutils'
-copyright = "2021, Yohsuke T. Fukai"
-author = "Yohsuke T. Fukai"
+project = u'pycziutils'
+copyright = u"2021, Yohsuke T. Fukai"
+author = u"Yohsuke T. Fukai"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -83,7 +84,7 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'nature'
 
 # Theme options are theme-specific and customize the look and feel of a
 # theme further.  For a list of options available for each theme, see the
@@ -128,8 +129,8 @@ latex_elements = {
 # [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'pycziutils.tex',
-     'pycziutils Documentation',
-     'Yohsuke T. Fukai', 'manual'),
+     u'pycziutils Documentation',
+     u'Yohsuke T. Fukai', 'manual'),
 ]
 
 
@@ -139,7 +140,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'pycziutils',
-     'pycziutils Documentation',
+     u'pycziutils Documentation',
      [author], 1)
 ]
 
@@ -151,7 +152,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'pycziutils',
-     'pycziutils Documentation',
+     u'pycziutils Documentation',
      author,
      'pycziutils',
      'One line description of project.',

@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "pycziutils"
+version = "0.1.0"
+description = "Python utilities to read CZI files and parse metadata through python-bioformats"
+authors = ["Yohsuke T. Fukai <ysk@yfukai.net>"]
+license = "BSD license"
+
+readme = "README.rst"
+
+repository = "https://github.com/yfukai/pycziutils"
+
+homepage = https://pycziutils.readthedocs.io.
+
+
+packages = [
+    { include = "pycziutils", from = "src"},
+]
+
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+]
+[tool.poetry.dependencies]
+# List project dependencies here
+
+[tool.poetry.dev-dependencies]
+bump2version = "^0.5.0"
+pip = "^18.1"
+wheel = "^0.32.1"
+watchdog = "^0.9.0"
+flake8 = "^3.5.0"
+tox = "^3.5.2"
+coverage = "^4.5.1"
+Sphinx = "^1.8.1"
+twine = "^1.12.1"
+
+pytest = "^3.8.2"
+pytest-runner = "^4.2"
+pytest-cov = "^2.6.0"
+setuptools = "^40.5.0"
+rstcheck = "^3.3.1"
+ptpython = "^2.0.4"
