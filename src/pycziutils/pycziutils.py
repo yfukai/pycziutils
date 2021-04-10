@@ -1,5 +1,5 @@
 # coding: utf-8
-# This file contains 
+# This file contains a part of source code in python-bioformats (  ), which is licensed 
 """
 pycziutils
 
@@ -273,7 +273,7 @@ def get_planes(ome_xml,acquisition_timezone=0):
     planes_df=pd.DataFrame()
     for j,(ps,acq_date) in enumerate(zip(positions,acq_dates)):
         df=pd.DataFrame(data=ps,columns=names,
-                        dtype=np.float)
+                        dtype=np.float64)
         df["image"]=j
         df["plane"]=range(len(ps))
 
