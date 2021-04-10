@@ -1,5 +1,5 @@
 # coding: utf-8
-# This file contains a part of source code in python-bioformats (  ), which is licensed 
+# This file contains a part of source code in python-bioformats (  ), which is licensed
 """
 pycziutils
 
@@ -21,22 +21,22 @@ def function_using_javabridge():
 """
 
 import copy
-from datetime import timedelta, timezone, datetime
+import json
+from datetime import datetime, timedelta, timezone
+
 import bioformats
 import javabridge
-from javabridge import jutil
-
-import xmltodict
-import json
-
 import numpy as np
 import pandas as pd
+import xmltodict
+from javabridge import jutil
 
 ################ metadata reading functions ################
 
+
 def get_tiled_reader(path):
     """
-    Read tiled czi image and get ZeissCZIReader without stitching 
+    Read tiled czi image and get ZeissCZIReader without stitching
 
     Parameters
     ---------
@@ -45,27 +45,42 @@ def get_tiled_reader(path):
 
     Returns
     -------
-    reader : ZeissCZIReader 
+    reader : ZeissCZIReader
         tiled reader
     """
-    CZIAllowStitchKey=jutil.get_static_field("loci/formats/in/ZeissCZIReader", "ALLOW_AUTOSTITCHING_KEY", "Ljava/lang/String;")
-    CZIIncludeAttachmentKey=jutil.get_static_field("loci/formats/in/ZeissCZIReader", "INCLUDE_ATTACHMENTS_KEY", "Ljava/lang/String;")
-    jutil.set_static_field("loci/formats/in/ZeissCZIReader","ALLOW_AUTOSTITCHING_DEFAULT","Z",False)
-    jutil.set_static_field("loci/formats/in/ZeissCZIReader","INCLUDE_ATTACHMENTS_DEFAULT","Z",False)
+    CZIAllowStitchKey = jutil.get_static_field(
+        "loci/formats/in/ZeissCZIReader",
+        "ALLOW_AUTOSTITCHING_KEY",
+        "Ljava/lang/String;",
+    )
+    CZIIncludeAttachmentKey = jutil.get_static_field(
+        "loci/formats/in/ZeissCZIReader",
+        "INCLUDE_ATTACHMENTS_KEY",
+        "Ljava/lang/String;",
+    )
+    jutil.set_static_field(
+        "loci/formats/in/ZeissCZIReader", "ALLOW_AUTOSTITCHING_DEFAULT", "Z", False
+    )
+    jutil.set_static_field(
+        "loci/formats/in/ZeissCZIReader", "INCLUDE_ATTACHMENTS_DEFAULT", "Z", False
+    )
     rdr = bioformats.ImageReader(path, perform_init=False)
-    DynamicMetadataOptions=javabridge.JClassWrapper("loci.formats.in.DynamicMetadataOptions")
-    dynop=DynamicMetadataOptions()
-    dynop.set(CZIAllowStitchKey,"false")
-    dynop.set(CZIIncludeAttachmentKey,"false")
+    DynamicMetadataOptions = javabridge.JClassWrapper(
+        "loci.formats.in.DynamicMetadataOptions"
+    )
+    dynop = DynamicMetadataOptions()
+    dynop.set(CZIAllowStitchKey, "false")
+    dynop.set(CZIIncludeAttachmentKey, "false")
     rdr.rdr.setMetadataOptions(dynop)
     rdr.metadata = bioformats.metadatatools.createOMEXMLMetadata()
     rdr.rdr.setMetadataStore(rdr.metadata)
     rdr.rdr.setId(rdr.path)
     return rdr
 
-def get_tiled_omexml_metadata(path=None, url=None,*,group_file=True):
+
+def get_tiled_omexml_metadata(path=None, url=None, *, group_file=True):
     """
-    Read tiled czi image and get ZeissCZIReader without stitching 
+    Read tiled czi image and get ZeissCZIReader without stitching
 
     Parameters
     ---------
@@ -78,7 +93,7 @@ def get_tiled_omexml_metadata(path=None, url=None,*,group_file=True):
 
     Returns
     -------
-    xml : str 
+    xml : str
         the OME-XML string
 
     Notes
@@ -114,44 +129,63 @@ def get_tiled_omexml_metadata(path=None, url=None,*,group_file=True):
         var xml = service.getOMEXML(metadata);
         xml;
         """
-        xml = jutil.run_script(script, dict(path=rdr.path, reader = rdr.rdr))
+        xml = jutil.run_script(script, dict(path=rdr.path, reader=rdr.rdr))
     return xml
+
 
 def with_javabridge(func):
     """
     runs function with javabridge, with the loglevel error
     https://forum.image.sc/t/python-bioformats-and-javabridge-debug-messages/12578/11
     """
-    def wrapped(*args,**kwargs):
+
+    def wrapped(*args, **kwargs):
         try:
             javabridge.start_vm(class_path=bioformats.JARS)
-            myloglevel="ERROR"  # user string argument for logLevel.
-            rootLoggerName = javabridge.get_static_field("org/slf4j/Logger","ROOT_LOGGER_NAME", "Ljava/lang/String;")
-            rootLogger = javabridge.static_call("org/slf4j/LoggerFactory","getLogger", "(Ljava/lang/String;)Lorg/slf4j/Logger;", rootLoggerName)
-            logLevel = javabridge.get_static_field("ch/qos/logback/classic/Level",myloglevel, "Lch/qos/logback/classic/Level;")
-            javabridge.call(rootLogger, "setLevel", "(Lch/qos/logback/classic/Level;)V", logLevel)
-            return func(*args,**kwargs)
+            myloglevel = "ERROR"  # user string argument for logLevel.
+            rootLoggerName = javabridge.get_static_field(
+                "org/slf4j/Logger", "ROOT_LOGGER_NAME", "Ljava/lang/String;"
+            )
+            rootLogger = javabridge.static_call(
+                "org/slf4j/LoggerFactory",
+                "getLogger",
+                "(Ljava/lang/String;)Lorg/slf4j/Logger;",
+                rootLoggerName,
+            )
+            logLevel = javabridge.get_static_field(
+                "ch/qos/logback/classic/Level",
+                myloglevel,
+                "Lch/qos/logback/classic/Level;",
+            )
+            javabridge.call(
+                rootLogger, "setLevel", "(Lch/qos/logback/classic/Level;)V", logLevel
+            )
+            return func(*args, **kwargs)
         finally:
             javabridge.kill_vm()
+
     return wrapped
 
 
 ################ metadata parsing functions ################
 
+
 def __wrap_list(x):
-    if isinstance(x,list):
+    if isinstance(x, list):
         return x
     else:
         return [x]
 
-def __copy_keys(x,keys):
-#    print(x,keys)
-    if not isinstance(keys,list):
+
+def __copy_keys(x, keys):
+    #    print(x,keys)
+    if not isinstance(keys, list):
         return copy.deepcopy(x[keys])
     else:
-        return [copy.deepcopy(x.get(key,None)) for key in keys] 
+        return [copy.deepcopy(x.get(key, None)) for key in keys]
 
-def get_properties(ome_xml,keys,domain="pixels"):
+
+def get_properties(ome_xml, keys, domain="pixels"):
     """
     parse OME-XML and get properties of the specified domain
 
@@ -159,31 +193,33 @@ def get_properties(ome_xml,keys,domain="pixels"):
     ----------
     ome_xml : str
         the input OME-XML string
-    keys : 
+    keys :
         the keys for the properties
     domain : str
         the domain level to get properties, should be "image", "pixels" or "plane"
 
     Returns
     -------
-    properties : 
-        the properties as a list    
+    properties :
+        the properties as a list
     """
-    meta_dict=xmltodict.parse(ome_xml)
-    images=__wrap_list(meta_dict["OME"]["Image"])
+    meta_dict = xmltodict.parse(ome_xml)
+    images = __wrap_list(meta_dict["OME"]["Image"])
 
-    if domain=="image":
-        return [__copy_keys(im,keys) for im in images]
-    elif domain=="pixels":
-        return [__copy_keys(im["Pixels"],keys) for im in images]
-    elif domain=="plane":
-        return [[__copy_keys(pl,keys)
-                     for pl in __wrap_list(im["Pixels"]["Plane"])] 
-                     for im in images]
+    if domain == "image":
+        return [__copy_keys(im, keys) for im in images]
+    elif domain == "pixels":
+        return [__copy_keys(im["Pixels"], keys) for im in images]
+    elif domain == "plane":
+        return [
+            [__copy_keys(pl, keys) for pl in __wrap_list(im["Pixels"]["Plane"])]
+            for im in images
+        ]
     else:
         raise ValueError("domain must be plane, pixels or image")
 
-def get_channels(ome_xml,assume_all_equal=True):
+
+def get_channels(ome_xml, assume_all_equal=True):
     """
     parse OME-XML and get the channel list
 
@@ -196,26 +232,27 @@ def get_channels(ome_xml,assume_all_equal=True):
 
     Returns
     -------
-    channels : 
-        a list of channels if assume_all_equal==True, 
+    channels :
+        a list of channels if assume_all_equal==True,
         otherwise a list of lists of channels for each planes
     """
-    channelss=get_properties(ome_xml,"Channel")
-    _channelss=[]
+    channelss = get_properties(ome_xml, "Channel")
+    _channelss = []
     for cc in channelss:
-        _cc=__wrap_list(cc)
+        _cc = __wrap_list(cc)
         for c in _cc:
             del c["@ID"]
         _channelss.append(_cc)
-    channelss=_channelss
+    channelss = _channelss
 
     if assume_all_equal:
-        assert all([c==channelss[0] for c in channelss])
+        assert all([c == channelss[0] for c in channelss])
         return channelss[0]
     else:
         return channelss
 
-def get_pixel_size(ome_xml,assume_all_equal=True):
+
+def get_pixel_size(ome_xml, assume_all_equal=True):
     """
     parse OME-XML and get the pixel sizes
 
@@ -228,21 +265,27 @@ def get_pixel_size(ome_xml,assume_all_equal=True):
 
     Returns
     -------
-    pixel sizes : 
-        a list of pixel sizes if assume_all_equal==True, 
+    pixel sizes :
+        a list of pixel sizes if assume_all_equal==True,
         otherwise a list of lists of pixel sizes for each planes
     """
-    keys=['@PhysicalSizeX','@PhysicalSizeXUnit','@PhysicalSizeY','@PhysicalSizeYUnit']
-    props=get_properties(ome_xml,keys)
+    keys = [
+        "@PhysicalSizeX",
+        "@PhysicalSizeXUnit",
+        "@PhysicalSizeY",
+        "@PhysicalSizeYUnit",
+    ]
+    props = get_properties(ome_xml, keys)
     if assume_all_equal:
-        assert np.all([
-            np.all([props[0][i]==p[i] for i in range(len(keys))])
-            for p in props])
+        assert np.all(
+            [np.all([props[0][i] == p[i] for i in range(len(keys))]) for p in props]
+        )
         return props[0]
     else:
         return props
 
-def get_planes(ome_xml,acquisition_timezone=0):
+
+def get_planes(ome_xml, acquisition_timezone=0):
     """
     parse OME-XML and get pandas dataframe for each planes
 
@@ -251,7 +294,7 @@ def get_planes(ome_xml,acquisition_timezone=0):
     ome_xml : str
         the input OME-XML string
     acquisition_timezone : Union[datetime.timezone, int]
-        timezone to use. if int is given, 
+        timezone to use. if int is given,
         datetime.timezone(datetime.timedelta(timezone)) is used
 
     Returns
@@ -264,42 +307,52 @@ def get_planes(ome_xml,acquisition_timezone=0):
     absolute_T is T + AcquisitionDate, not sure if it is absolutely correct for now
 
     """
-    keys=['@PositionX','@PositionY','@PositionZ',
-          "@DeltaT","@TheC","@TheT","@TheZ"]
-    names=["X","Y","Z","T","C_index","T_index","Z_index"]
-    positions=get_properties(ome_xml,keys,domain="plane")
-    acq_dates=get_properties(ome_xml,"AcquisitionDate",domain="image")
+    keys = [
+        "@PositionX",
+        "@PositionY",
+        "@PositionZ",
+        "@DeltaT",
+        "@TheC",
+        "@TheT",
+        "@TheZ",
+    ]
+    names = ["X", "Y", "Z", "T", "C_index", "T_index", "Z_index"]
+    positions = get_properties(ome_xml, keys, domain="plane")
+    acq_dates = get_properties(ome_xml, "AcquisitionDate", domain="image")
     assert len(positions) == len(acq_dates)
-    planes_df=pd.DataFrame()
-    for j,(ps,acq_date) in enumerate(zip(positions,acq_dates)):
-        df=pd.DataFrame(data=ps,columns=names,
-                        dtype=np.float64)
-        df["image"]=j
-        df["plane"]=range(len(ps))
+    planes_df = pd.DataFrame()
+    for j, (ps, acq_date) in enumerate(zip(positions, acq_dates)):
+        df = pd.DataFrame(data=ps, columns=names, dtype=np.float64)
+        df["image"] = j
+        df["plane"] = range(len(ps))
 
-        if isinstance(acquisition_timezone,int):
-            acquisition_timezone=timezone(timedelta(hours=acquisition_timezone))
-        acq_date=datetime.strptime(acq_date,'%Y-%m-%dT%H:%M:%S.%f')\
-                     .replace(tzinfo=timezone.utc)\
-                     .astimezone(acquisition_timezone)
-        df["image_acquisition_T"]=acq_date
+        if isinstance(acquisition_timezone, int):
+            acquisition_timezone = timezone(timedelta(hours=acquisition_timezone))
+        acq_date = (
+            datetime.strptime(acq_date, "%Y-%m-%dT%H:%M:%S.%f")
+            .replace(tzinfo=timezone.utc)
+            .astimezone(acquisition_timezone)
+        )
+        df["image_acquisition_T"] = acq_date
 
-        planes_df=planes_df.append(df)
-    for k in [n for n in names if "index" in n]+["image","plane"]:
-        planes_df[k]=planes_df[k].astype(int)
-    planes_df["absolute_T"]=planes_df["image_acquisition_T"]\
-                            +np.vectorize(timedelta)(seconds=planes_df["T"])
-    planes_df=planes_df.reset_index()
+        planes_df = planes_df.append(df)
+    for k in [n for n in names if "index" in n] + ["image", "plane"]:
+        planes_df[k] = planes_df[k].astype(int)
+    planes_df["absolute_T"] = planes_df["image_acquisition_T"] + np.vectorize(
+        timedelta
+    )(seconds=planes_df["T"])
+    planes_df = planes_df.reset_index()
     return planes_df
 
-def summarize_image_size(reader,print_summary=True):
+
+def summarize_image_size(reader, print_summary=True):
     """
     get image size and summarize from reader
 
     Parameters
     ----------
     reader :
-        the bioformat reader 
+        the bioformat reader
     print_summary : bool, default True
         wheather to print the size summary
 
@@ -307,32 +360,33 @@ def summarize_image_size(reader,print_summary=True):
     -------
         seriesCount : int
             the count for series
-        sizeT : int 
+        sizeT : int
             the count for time
-        sizeC : int 
+        sizeC : int
             the count for channels
-        sizeX : int 
+        sizeX : int
             the count for X
-        sizeY : int 
+        sizeY : int
             the count for Y
-        sizeZ : int 
+        sizeZ : int
             the count for Z
 
     """
-    seriesCount=reader.rdr.getSeriesCount()
-    sizeT=reader.rdr.getSizeT()
-    sizeC=reader.rdr.getSizeC()
-    sizeX=reader.rdr.getSizeX()
-    sizeY=reader.rdr.getSizeY()
-    sizeZ=reader.rdr.getSizeZ()
+    seriesCount = reader.rdr.getSeriesCount()
+    sizeT = reader.rdr.getSizeT()
+    sizeC = reader.rdr.getSizeC()
+    sizeX = reader.rdr.getSizeX()
+    sizeY = reader.rdr.getSizeY()
+    sizeZ = reader.rdr.getSizeZ()
     if print_summary:
-        print("series count:",seriesCount)
-        print("sizeT:",sizeT)
-        print("sizeC:",sizeC)
-        print("sizeX:",sizeX)
-        print("sizeY:",sizeY)
-        print("sizeZ:",sizeZ)
-    return seriesCount,sizeT,sizeC,sizeX,sizeY,sizeZ
+        print("series count:", seriesCount)
+        print("sizeT:", sizeT)
+        print("sizeC:", sizeC)
+        print("sizeX:", sizeX)
+        print("sizeY:", sizeY)
+        print("sizeZ:", sizeZ)
+    return seriesCount, sizeT, sizeC, sizeX, sizeY, sizeZ
+
 
 def get_structured_annotation_dict(ome_xml):
     """
@@ -349,10 +403,13 @@ def get_structured_annotation_dict(ome_xml):
         OriginalMetadata.key : OriginalMetadata.value pairs as a dict
 
     """
-    meta_dict=xmltodict.parse(ome_xml)
-    annotation=meta_dict["OME"]['StructuredAnnotations']['XMLAnnotation']
-    return {a["Value"]["OriginalMetadata"]["Key"]:
-            a["Value"]["OriginalMetadata"]["Value"] for a in annotation}
+    meta_dict = xmltodict.parse(ome_xml)
+    annotation = meta_dict["OME"]["StructuredAnnotations"]["XMLAnnotation"]
+    return {
+        a["Value"]["OriginalMetadata"]["Key"]: a["Value"]["OriginalMetadata"]["Value"]
+        for a in annotation
+    }
+
 
 def get_binning(ome_xml):
     """
@@ -373,8 +430,8 @@ def get_binning(ome_xml):
     uses 'HardwareSetting|ParameterCollection|Binning'
 
     """
-    annotation_dict=get_structured_annotation_dict(ome_xml)
-    binning=json.loads(annotation_dict['HardwareSetting|ParameterCollection|Binning'])
+    annotation_dict = get_structured_annotation_dict(ome_xml)
+    binning = json.loads(annotation_dict["HardwareSetting|ParameterCollection|Binning"])
     return list(binning)
 
 
@@ -390,18 +447,20 @@ def get_camera_roi(ome_xml):
     Returns
     -------
     roi : list
-        the camera ROI (x0,y0,x1,y1) as a list 
+        the camera ROI (x0,y0,x1,y1) as a list
 
     Note
     ----
     uses 'HardwareSetting|ParameterCollection|ImageFrame'
 
     """
-    annotation_dict=get_structured_annotation_dict(ome_xml)
-    roi=json.loads(annotation_dict['HardwareSetting|ParameterCollection|ImageFrame']) # or 'HardwareSetting|ParameterCollection|Frame'?
+    annotation_dict = get_structured_annotation_dict(ome_xml)
+    roi = json.loads(
+        annotation_dict["HardwareSetting|ParameterCollection|ImageFrame"]
+    )  # or 'HardwareSetting|ParameterCollection|Frame'?
     return list(roi)[:4]
 
-    
+
 def get_camera_roi_slice(ome_xml):
     """
     parse OME-XML and get ROI as slices
@@ -414,15 +473,15 @@ def get_camera_roi_slice(ome_xml):
     Returns
     -------
     roi : slice
-        the camera ROI as slices; slice(x0,x0),slice(y0,y1) 
+        the camera ROI as slices; slice(x0,x0),slice(y0,y1)
 
     Note
     ----
     uses 'HardwareSetting|ParameterCollection|ImageFrame'
 
     """
-    roi=list(map(int,get_camera_roi(ome_xml)))
-    return slice(roi[0],roi[2]+roi[0]),slice(roi[1],roi[3]+roi[1])
+    roi = list(map(int, get_camera_roi(ome_xml)))
+    return slice(roi[0], roi[2] + roi[0]), slice(roi[1], roi[3] + roi[1])
 
 
 def get_camera_LUT(ome_xml):
@@ -441,19 +500,24 @@ def get_camera_LUT(ome_xml):
 
     Note
     ----
-    uses 'HardwareSetting|ParameterCollection|CameraLUT1' and 
+    uses 'HardwareSetting|ParameterCollection|CameraLUT1' and
          'HardwareSetting|ParameterCollection|CameraLUT2'
 
     """
-    annotation_dict=get_structured_annotation_dict(ome_xml)
+    annotation_dict = get_structured_annotation_dict(ome_xml)
     try:
-        lut1=json.loads(annotation_dict['HardwareSetting|ParameterCollection|CameraLUT1'])
-        lut2=json.loads(annotation_dict['HardwareSetting|ParameterCollection|CameraLUT2'])
-        assert len(lut1)==1
-        assert len(lut2)==1
-        return (lut1[0],lut2[0])
+        lut1 = json.loads(
+            annotation_dict["HardwareSetting|ParameterCollection|CameraLUT1"]
+        )
+        lut2 = json.loads(
+            annotation_dict["HardwareSetting|ParameterCollection|CameraLUT2"]
+        )
+        assert len(lut1) == 1
+        assert len(lut2) == 1
+        return (lut1[0], lut2[0])
     except KeyError:
-        return (np.nan,np.nan)
+        return (np.nan, np.nan)
+
 
 def get_camera_bits(ome_xml):
     """
@@ -474,8 +538,9 @@ def get_camera_bits(ome_xml):
     uses 'HardwareSetting|ParameterCollection|ValidBits'
 
     """
-    annotation_dict=get_structured_annotation_dict(ome_xml)
-    res=list(json.loads(annotation_dict['HardwareSetting|ParameterCollection|ValidBits']))
-    assert len(res)==1
+    annotation_dict = get_structured_annotation_dict(ome_xml)
+    res = list(
+        json.loads(annotation_dict["HardwareSetting|ParameterCollection|ValidBits"])
+    )
+    assert len(res) == 1
     return res[0]
-    

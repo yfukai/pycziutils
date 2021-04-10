@@ -4,8 +4,6 @@
 """Tests for `pycziutils` package."""
 
 import pytest
-
-
 from pycziutils import pycziutils
 
 
