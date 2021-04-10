@@ -27,8 +27,8 @@ classifiers = [
 ]
 [tool.poetry.dependencies]
 python = "^3.7.1"
-python-bioformats = "^4"
-python-javabridge = "^4"
+python-bioformats = "^4.0.4"
+python-javabridge = "^4.0.3"
 xmltodict = "^0.12"
 numpy = "^1.9"
 pandas = "^1.0"
