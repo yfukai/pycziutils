@@ -25,6 +25,8 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
 ]
+
+
 [tool.poetry.dependencies]
 python = "^3.7.1"
 python-bioformats = "^4.0.4"
