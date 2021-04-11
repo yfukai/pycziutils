@@ -1,5 +1,6 @@
 # coding: utf-8
-# This file contains a part of source code in python-bioformats (  ), which is licensed
+# This file contains modified source code from python-bioformats ( https://github.com/CellProfiler/python-bioformats ), 
+# which is licensed under BSD license. For details, see LICENSE.
 
 import bioformats
 import javabridge
