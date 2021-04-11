@@ -41,8 +41,11 @@ Parse tiled images, organize planes into pandas.DataFrame, parse some hard-to-ge
 
 Example
 -------
+
 .. code-block:: python
-    tiled_czi_reader=pycziutils.get_tiled_czi_reader("path/to/czi/file.czi")
+    
+    import pycziutils
+    tiled_czi_reader=pycziutils.get_tiled_czi_reader("path/to/czi/file.czi") #returns bioformats reader for tiled images
     tiled_czi_ome_xml=pycziutils.get_tiled_omexml_metadata("path/to/czi/file.czi")
     tile_properties_dataframe=pycziutils.get_planes(tiled_czi_ome_xml)
     bit_depth=pycziutils.get_camera_bits(tiled_czi_ome_xml)
