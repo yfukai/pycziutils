@@ -137,6 +137,3 @@ def with_javabridge(func):
             javabridge.kill_vm()
 
     return wrapped
-
-
-################ metadata parsing functions ################
