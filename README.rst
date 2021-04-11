@@ -54,9 +54,8 @@ Example
 
 TODO
 ----
-- Writing tests and tox setting
-- Test through CircleCI
 - Generate documentation
+- Writing tests and Github actions
 
 Credits
 -------
