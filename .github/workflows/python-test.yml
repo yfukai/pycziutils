@@ -31,7 +31,7 @@ jobs:
         version: '8' # The OpenJDK version to make available on the path
         architecture: 'x64' # defaults to 'x64'
         targets: 	JAVA_HOME
-    - run : java --version
+#    - run : java --version
     # - run: java -cp java HelloWorldApp
     #  uses: actions/setup-java@v2
     #  with:
