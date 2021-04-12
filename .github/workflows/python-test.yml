@@ -25,10 +25,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Set up Java
-      uses: joschi/setup-jdk@v2
+      uses: AdoptOpenJDK/install-jdk@v1
+#      uses: joschi/setup-jdk@v2
       with:
         java-version: '8' # The OpenJDK version to make available on the path
         architecture: 'x64' # defaults to 'x64'
+        targets: 	JAVA_HOME
+    - run : java --help
     # - run: java -cp java HelloWorldApp
     #  uses: actions/setup-java@v2
     #  with:
