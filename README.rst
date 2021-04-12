@@ -19,8 +19,8 @@ Python utilities to read (tiled) CZI files and parse metadata through python-bio
 * Documentation: https://pycziutils.readthedocs.io.
 
 
-Installation:
--------------
+Installation
+------------
 
 .. code-block:: console
 
