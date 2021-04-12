@@ -81,6 +81,7 @@ Example
 
 TODO
 ----
+- Get the doc hosted in readthedocs (fix installation problem)
 - Github actions
 - Writing tests for _parsers.py
 
