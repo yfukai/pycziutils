@@ -2,6 +2,8 @@
 pycziutils
 ==========
 
+.. image:: https://github.com/yfukai/pycziutils/actions/workflows/python-test.yml/badge.svg
+        :target: https://github.com/yfukai/pycziutils/actions
 
 .. image:: https://img.shields.io/pypi/v/pycziutils.svg
         :target: https://pypi.python.org/pypi/pycziutils
