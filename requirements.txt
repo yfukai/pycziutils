@@ -51,11 +51,14 @@ pandas==1.2.3; python_full_version >= "3.7.1" \
     --hash=sha256:d59842a5aa89ca03c2099312163ffdd06f56486050e641a45d926a072f04d994 \
     --hash=sha256:09761bf5f8c741d47d4b8b9073288de1be39bbfccc281d70b889ade12b2aad29 \
     --hash=sha256:df6f10b85aef7a5bb25259ad651ad1cc1d6bb09000595cab47e718cbac250b1d
-python-bioformats==4.0.4
+python-bioformats==4.0.4 \
+    --hash=sha256:42ee5a6f8e975cad2e956fc4a970a0f4dd4491222f4fc7cf42526f25615caa69 \
+    --hash=sha256:8c5458f3ad58016fcc71da763fcc029e3258ecc02b8c99098331eeb044946444
 python-dateutil==2.8.1; python_full_version >= "3.7.1" \
     --hash=sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c \
     --hash=sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a
-python-javabridge==4.0.3 
+python-javabridge==4.0.3 \
+    --hash=sha256:3fee0c235efcfe866f95695fdc0b6289eab2371043b32ff4ca6feff098de59c5
 pytz==2021.1; python_full_version >= "3.7.1" \
     --hash=sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798 \
     --hash=sha256:83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da
