@@ -71,3 +71,6 @@ py_version = "py37"
 
 [tool.pysen.lint.source]
   excludes = ["docs/"]
+
+[tool.poetry2conda]
+name = "pycziutils"
