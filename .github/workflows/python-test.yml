@@ -28,7 +28,7 @@ jobs:
       uses: AdoptOpenJDK/install-jdk@v1
 #      uses: joschi/setup-jdk@v2
       with:
-        java-version: '8' # The OpenJDK version to make available on the path
+        version: '8' # The OpenJDK version to make available on the path
         architecture: 'x64' # defaults to 'x64'
         targets: 	JAVA_HOME
     - run : java --help
