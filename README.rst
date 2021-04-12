@@ -81,11 +81,6 @@ Example
     if __name__=="__main__":
         main()
 
-TODO
-----
-- Write Github actions
-- Writing tests for _parsers.py
-
 Credits
 -------
 
