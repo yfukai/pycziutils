@@ -181,7 +181,7 @@ def parse_planes(ome_xml, acquisition_timezone=0):
     planes_df = planes_df.reset_index()
     channels = parse_channels(ome_xml)
     print(channels)
-    planes_df["C"]=planes_df["C_index"].apply(lambda i : channels[i]["@Name"])
+    planes_df["C"] = planes_df["C_index"].apply(lambda i: channels[i]["@Name"])
     return planes_df
 
 
