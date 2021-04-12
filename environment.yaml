@@ -9,4 +9,8 @@
 ###############################################################################
 name: pycziutils
 dependencies:
+  - python>=3.6 
   - openjdk
+  - pip
+  - pip:
+    - -r file:requirements.txt
