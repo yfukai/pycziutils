@@ -1,11 +1,12 @@
 # coding: utf-8
-# This file contains modified source code from python-bioformats ( https://github.com/CellProfiler/python-bioformats ), 
+# This file contains modified source code from python-bioformats ( https://github.com/CellProfiler/python-bioformats ),
 # which is licensed under BSD license. For details, see LICENSE.
+
+import functools
 
 import bioformats
 import javabridge
 from javabridge import jutil
-import functools
 
 
 def get_tiled_reader(path):
@@ -112,6 +113,7 @@ def with_javabridge(func):
     runs function with javabridge, with the loglevel error
     https://forum.image.sc/t/python-bioformats-and-javabridge-debug-messages/12578/11
     """
+
     @functools.wraps(func)
     def wrapped(*args, **kwargs):
         try:

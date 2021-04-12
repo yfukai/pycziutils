@@ -51,7 +51,10 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
-	flake8 pycziutils tests
+	poetry run pysen run lint
+
+format: ## format codes with pysen
+	poetry run pysen run format
 
 test: ## run tests quickly with the default Python
 	poetry run pytest
