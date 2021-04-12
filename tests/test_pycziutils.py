@@ -82,7 +82,7 @@ def test_read_images_by_dataframe(czi_files_path):
         assert_indices(tiled_properties_dataframe["Z_index"], data["z"])
 
         # returns bioformats reader for tiled images
-        reader = pycziutils.get_tiled_reader(name)  
+        reader = pycziutils.get_tiled_reader(name)
         for _, row in tiled_properties_dataframe.iterrows():
             image = reader.read(
                 series=row["image"],
@@ -90,3 +90,5 @@ def test_read_images_by_dataframe(czi_files_path):
                 z=row["Z_index"],
                 c=row["C_index"],
             )
+            assert np.any(np.array(image) > 0)
+            # TODO check other properties
