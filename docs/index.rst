@@ -5,9 +5,9 @@ Welcome to pycziutils's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   readme
+   Introduction <readme>
    installation
-   modules
+   API <modules>
    contributing
    authors
    history

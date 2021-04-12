@@ -23,10 +23,13 @@ from ._parsers import (
     parse_properties,
     parse_structured_annotation_dict,
 )
-from ._readers import get_tiled_omexml_metadata, get_tiled_reader
+from ._readers import get_tiled_omexml_metadata, get_tiled_reader, with_javabridge
 
 # __all__ = [name for name in dir() if not name.startswith("_")]
 __all__ = [
+    "get_tiled_omexml_metadata",
+    "get_tiled_reader",
+    "with_javabridge",
     "parse_binning",
     "parse_camera_bits",
     "parse_camera_LUT",
@@ -37,6 +40,4 @@ __all__ = [
     "parse_planes",
     "parse_properties",
     "parse_structured_annotation_dict",
-    "get_tiled_omexml_metadata",
-    "get_tiled_reader",
 ]

@@ -54,7 +54,7 @@ lint: ## check style with flake8
 	flake8 pycziutils tests
 
 test: ## run tests quickly with the default Python
-	poetry run pytest
+	poetry run pytest -s
 
 coverage: ## check code coverage quickly with the default Python
 	poetry run coverage run --source src/pycziutils -m pytest

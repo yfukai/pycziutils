@@ -5,6 +5,7 @@
 import bioformats
 import javabridge
 from javabridge import jutil
+import functools
 
 
 def get_tiled_reader(path):
@@ -111,7 +112,7 @@ def with_javabridge(func):
     runs function with javabridge, with the loglevel error
     https://forum.image.sc/t/python-bioformats-and-javabridge-debug-messages/12578/11
     """
-
+    @functools.wraps(func)
     def wrapped(*args, **kwargs):
         try:
             javabridge.start_vm(class_path=bioformats.JARS)

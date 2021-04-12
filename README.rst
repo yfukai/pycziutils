@@ -45,20 +45,43 @@ Example
 .. code-block:: python
     
     import pycziutils
-    tiled_czi_reader=pycziutils.get_tiled_czi_reader("path/to/czi/file.czi") #returns bioformats reader for tiled images
-    tiled_czi_ome_xml=pycziutils.get_tiled_omexml_metadata("path/to/czi/file.czi")
-    tile_properties_dataframe=pycziutils.get_planes(tiled_czi_ome_xml)
-    bit_depth=pycziutils.get_camera_bits(tiled_czi_ome_xml)
-    
-    # bonus:
-    @with_javabridge
-    def function_using_javabridge():
-        pass # do whatever you like to do with javabridge, with adjusted log level!
+
+    @pycziutils.with_javabridge
+    def test_read_images_by_dataframe(czi_file_path):
+        tiled_czi_ome_xml=pycziutils.get_tiled_omexml_metadata(czi_file_path)
+        tiled_properties_dataframe=pycziutils.parse_planes(tiled_czi_ome_xml)
+
+        print(tiled_properties_dataframe.columns)
+        #Index(['index', 'X', 'Y', 'Z', 'T', 'C_index', 'T_index', 'Z_index', 'image',
+        #       'plane', 'image_acquisition_T', 'absolute_T'],
+        #        dtype='object')
+
+        print(tiled_properties_dataframe.iloc[0])
+        #index                                                 0
+        #X                                             -1165.624
+        #Y                                               122.694
+        #Z                                                 0.001
+        #T                                                 1.027
+        #C_index                                               0
+        #T_index                                               0
+        #Z_index                                               0
+        #image                                                 0
+        #plane                                                 0
+        #image_acquisition_T    2021-04-12 02:12:21.340000+00:00
+        #absolute_T             2021-04-12 02:12:22.367000+00:00
+        #Name: 0, dtype: object
+
+        reader=pycziutils.get_tiled_reader(czi_file_path) #returns bioformats reader for tiled images
+        for i, row in tiled_properties_dataframe.iterrows():
+            image=reader.read(series=row["image"],t=row["T_index"],z=row["Z_index"],c=row["C_index"])
+   
+    if __name__=="__main__":
+        main()
 
 TODO
 ----
-- Generate documentation
-- Writing tests and Github actions
+- Github actions
+- Writing tests for _parsers.py
 
 Credits
 -------
