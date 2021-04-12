@@ -1,3 +1,4 @@
-python:
-    install:
-        - requirements: docs/requirements.txt
+version: 2
+
+conda:
+  environment: environment.yaml

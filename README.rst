@@ -19,8 +19,8 @@ Python utilities to read (tiled) CZI files and parse metadata through python-bio
 * Documentation: https://pycziutils.readthedocs.io.
 
 
-Installation:
--------------
+Installation
+------------
 
 .. code-block:: console
 
@@ -88,10 +88,13 @@ TODO
 Credits
 -------
 
+This package uses `python-bioformats`_ as a nice tool to connect CZI files to Python.
+
 This package was created with Cookiecutter_ and the `wboxx1/cookiecutter-pypackage-poetry`_ project template.
 
-This package is using pysen_ for linting and formatting. 
+This package uses pysen_ for linting and formatting. 
 
+.. _`python-bioformats`: https://github.com/CellProfiler/python-bioformats
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`wboxx1/cookiecutter-pypackage-poetry`: https://github.com/wboxx1/cookiecutter-pypackage-poetry
 .. _pysen: https://github.com/pfnet/pysen
