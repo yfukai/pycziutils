@@ -4,7 +4,6 @@
 """Tests for `pycziutils` package."""
 
 import os
-import re
 from glob import glob
 from os import path
 
@@ -82,10 +81,9 @@ def test_read_images_by_dataframe(czi_files_path):
         assert_indices(tiled_properties_dataframe["T_index"], data["time"])
         assert_indices(tiled_properties_dataframe["Z_index"], data["z"])
 
-        reader = pycziutils.get_tiled_reader(
-            name
-        )  # returns bioformats reader for tiled images
-        for i, row in tiled_properties_dataframe.iterrows():
+        # returns bioformats reader for tiled images
+        reader = pycziutils.get_tiled_reader(name)  
+        for _, row in tiled_properties_dataframe.iterrows():
             image = reader.read(
                 series=row["image"],
                 t=row["T_index"],
