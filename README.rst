@@ -49,7 +49,7 @@ Example
         tiled_properties_dataframe=pycziutils.parse_planes(tiled_czi_ome_xml)
 
         print(tiled_properties_dataframe.columns)
-        #Index(['index', 'X', 'Y', 'Z', 'T', 'C_index', 'T_index', 'Z_index', 'image',
+        #Index(['index', 'X', 'Y', 'Z', 'T', 'C', 'C_index', 'T_index', 'Z_index', 'image',
         #       'plane', 'image_acquisition_T', 'absolute_T'],
         #        dtype='object')
 
