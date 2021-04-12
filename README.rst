@@ -59,6 +59,7 @@ Example
         #Y                                               122.694
         #Z                                                 0.001
         #T                                                 1.027
+        #C                                                 Phase
         #C_index                                               0
         #T_index                                               0
         #Z_index                                               0
