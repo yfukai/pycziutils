@@ -1,3 +1,4 @@
+#Note: this file is necessary to build in ReadTheDocs
 name: pycziutils
 dependencies:
   - python>=3.5 
