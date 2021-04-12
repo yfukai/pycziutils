@@ -9,9 +9,4 @@
 ###############################################################################
 name: pycziutils
 dependencies:
-  - python>=3.7.1,<4.0.0
-  - python-bioformats>=4.0.4,<5.0.0
-  - python-javabridge>=4.0.3,<5.0.0
-  - xmltodict>=0.12,<0.13
-  - numpy>=1.9,<2.0
-  - pandas>=1.0,<2.0
+  - openjdk
