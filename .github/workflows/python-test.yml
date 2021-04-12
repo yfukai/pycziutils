@@ -26,10 +26,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Set up Java
       uses: AdoptOpenJDK/install-jdk@v1
-#      uses: joschi/setup-jdk@v2
       with:
-        version: '8' # The OpenJDK version to make available on the path
-        architecture: 'x64' # defaults to 'x64'
+        version: '8' 
+        architecture: 'x64' 
         targets: 	'JDK_HOME;JAVA_HOME'
     - name: Set up Poetry ${{ matrix.poetry-version }}
       uses: abatilo/actions-poetry@v2.0.0
@@ -39,8 +38,6 @@ jobs:
       run: |
         poetry update
         poetry install 
-#      env: 
-#        JDK_HOME: ${{ env.JAVA_HOME }}
     - name: Test with pytest
       run: |
         make test
