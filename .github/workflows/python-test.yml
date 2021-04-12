@@ -46,6 +46,8 @@ jobs:
       run: |
         poetry update
         poetry install 
+      env: 
+        JDK_HOME: ${{ env.JAVA_HOME }}
     - name: Test with pytest
       run: |
         make test
