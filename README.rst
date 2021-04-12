@@ -46,8 +46,10 @@ Example
     
     import pycziutils
 
+
     @pycziutils.with_javabridge
-    def test_read_images_by_dataframe(czi_file_path):
+    def main():
+        czi_file_path="path/to/czi/file.czi"
         tiled_czi_ome_xml=pycziutils.get_tiled_omexml_metadata(czi_file_path)
         tiled_properties_dataframe=pycziutils.parse_planes(tiled_czi_ome_xml)
 
@@ -71,9 +73,15 @@ Example
         #absolute_T             2021-04-12 02:12:22.367000+00:00
         #Name: 0, dtype: object
 
-        reader=pycziutils.get_tiled_reader(czi_file_path) #returns bioformats reader for tiled images
+        #returns bioformats reader for tiled images
+        reader=pycziutils.get_tiled_reader(czi_file_path) 
         for i, row in tiled_properties_dataframe.iterrows():
-            image=reader.read(series=row["image"],t=row["T_index"],z=row["Z_index"],c=row["C_index"])
+            image = reader.read(
+                series=row["image"],
+                t=row["T_index"],
+                z=row["Z_index"],
+                c=row["C_index"],
+            )
    
     if __name__=="__main__":
         main()
