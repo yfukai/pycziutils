@@ -32,7 +32,7 @@ Features
 --------
 
 A tiny utility module to parse Zeiss CZI files in Python through python-bioformats.
-Parse tiled images, organize planes into pandas.DataFrame, parse some hard-to-get metadata.
+Parse tiled images, organize planes into pandas.DataFrame, and parse some hard-to-get metadata.
 
 Example
 -------
