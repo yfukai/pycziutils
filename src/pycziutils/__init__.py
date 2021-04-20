@@ -22,6 +22,7 @@ from ._parsers import (
     parse_planes,
     parse_properties,
     parse_structured_annotation_dict,
+    summarize_image_size
 )
 from ._readers import get_tiled_omexml_metadata, get_tiled_reader, with_javabridge
 
@@ -40,4 +41,5 @@ __all__ = [
     "parse_planes",
     "parse_properties",
     "parse_structured_annotation_dict",
+    "summarize_image_size",
 ]
