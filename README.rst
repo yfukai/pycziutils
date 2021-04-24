@@ -85,7 +85,7 @@ Example
 Credits
 -------
 
-This package uses `python-bioformats`_ as a nice tool to connect CZI files to Python.
+This package uses `python-bioformats`_ to connect CZI files to Python.
 
 This package was created with Cookiecutter_ and the `wboxx1/cookiecutter-pypackage-poetry`_ project template.
 
