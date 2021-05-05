@@ -9,7 +9,7 @@ Parse tiled images, organize planes into pandas.DataFrame, get some hard-to-get 
 
 __author__ = """Yohsuke T. Fukai"""
 __email__ = "ysk@yfukai.net"
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 from ._parsers import (
     parse_binning,
