@@ -9,7 +9,7 @@ Parse tiled images, organize planes into pandas.DataFrame, get some hard-to-get 
 
 __author__ = """Yohsuke T. Fukai"""
 __email__ = "ysk@yfukai.net"
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 from ._parsers import (
     parse_binning,
@@ -22,7 +22,7 @@ from ._parsers import (
     parse_planes,
     parse_properties,
     parse_structured_annotation_dict,
-    summarize_image_size
+    summarize_image_size,
 )
 from ._readers import get_tiled_omexml_metadata, get_tiled_reader, with_javabridge
 
