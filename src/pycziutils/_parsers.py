@@ -175,9 +175,13 @@ def parse_planes(ome_xml, acquisition_timezone=0):
         planes_df = planes_df.append(df)
     for k in [n for n in names if "index" in n] + ["image", "plane"]:
         planes_df[k] = planes_df[k].astype(int)
-    planes_df["absolute_T"] = planes_df["image_acquisition_T"] + np.vectorize(
-        timedelta
-    )(seconds=planes_df["T"])
+
+    non_nan_indices = ~planes_df["T"].isna()
+    planes_df.loc[non_nan_indices, "absolute_T"] = planes_df.loc[
+        non_nan_indices, "image_acquisition_T"
+    ] + np.vectorize(timedelta)(
+        seconds=planes_df.loc[non_nan_indices, "T"].astype(np.float64)
+    )
     planes_df = planes_df.reset_index()
     channels = parse_channels(ome_xml)
     print(channels)
