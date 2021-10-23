@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pycziutils"
-version = "0.3.1"
+version = "0.3.2"
 description = "Python utilities to read CZI files and parse metadata through python-bioformats"
 authors = ["Yohsuke T. Fukai <ysk@yfukai.net>"]
 license = "BSD license"
