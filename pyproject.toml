@@ -36,6 +36,7 @@ python-javabridge = "^4.0.3"
 xmltodict = "^0.12"
 numpy = "^1.9"
 pandas = "^1.0"
+pydantic = "^1.8.2"
 
 [tool.poetry.dev-dependencies]
 bump2version = "^1"
