@@ -1,12 +1,10 @@
+
+
+
 ==========
 pycziutils
 ==========
 
-Important notice
-----------------
-
-This repository has been archived as `aicsimageio` https://github.com/AllenCellModeling/aicsimageio can now read tiled CZI images. 
-No further update is expected.
 
 .. image:: https://github.com/yfukai/pycziutils/actions/workflows/python-test.yml/badge.svg
         :target: https://github.com/yfukai/pycziutils/actions
@@ -26,6 +24,11 @@ Python utilities to read (tiled) CZI files and parse metadata through python-bio
 
 * Documentation: https://pycziutils.readthedocs.io.
 
+Important notice
+----------------
+
+This repository has been archived as `aicsimageio` https://github.com/AllenCellModeling/aicsimageio can now read tiled CZI images.
+No further update is expected.
 
 Installation
 ------------
