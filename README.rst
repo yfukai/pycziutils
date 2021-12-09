@@ -2,6 +2,12 @@
 pycziutils
 ==========
 
+Important notice
+----------------
+
+This repository has been archived as `aicsimageio` https://github.com/AllenCellModeling/aicsimageio can now read tiled CZI images. 
+No further update is expected.
+
 .. image:: https://github.com/yfukai/pycziutils/actions/workflows/python-test.yml/badge.svg
         :target: https://github.com/yfukai/pycziutils/actions
 
